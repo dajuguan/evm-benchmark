@@ -2,13 +2,13 @@
 
 ## Setup
 
-### Generate block and state dependency data for in-memory executing
+### Generate block and state dependency data for in-memory execution
 
 ```
 git clone -b po_bal_dump git@github.com:dajuguan/reth.git
 cargo build --release
 # for n = to-from blocks, the following cmd will generate bals_n.json, prestates_n.json, blockHashes_n.json, blocks_n.json
-target/release/reth dump --datadir ~/test_nodes/ethereum/execution/reth_full --from 23600500 --to 23601000 
+target/release/reth dump --datadir <reth node dir> --from <from> --to <to>
 ```
 
 ### In-memory execute the dumped blocks
@@ -23,4 +23,4 @@ cargo build --release
 ../../target/release/revme baltest -t t -n n
 ```
 
-> Use revme -h to see more options, such as scheduling with tx's gas limit, debug info for the most time consuming txs.
+> Use revme baltest -h to see more options, such as scheduling with tx's gas limit, debug info for the most time consuming txs.
