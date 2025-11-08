@@ -24,7 +24,7 @@ pub fn criterion_benchmark_sender_recovery(c: &mut Criterion) {
         ).expect("could not parse signature");
     let hash = b256!("0x5eb4f5a33c621f32a8622d5f943b6b102994dfe4e5aebbefe69bb1b2aa0fc93e");
     let expected = address!("0x2c7536E3605D9C16a7a3D7b1898e529396a65c23");
-    let n = 200;
+    let n = 100;
     let mut sigs = Vec::with_capacity(n);
     for _ in 0..n {
         sigs.push((sig, hash));
