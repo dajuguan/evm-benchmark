@@ -1,6 +1,7 @@
 # REVM bench
 
 ## Setup
+> Prepare a reth mainnet full-node first.
 
 ### Generate block and state dependency data for in-memory execution
 
