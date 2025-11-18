@@ -21,7 +21,7 @@ cargo build --release
 # Move the above generated json file to bins/revme/data directory. If you don't have the blocks data, there is a default json files for block 23601108.
 
 # execute with t threads for the n blocks
-../../target/release/revme baltest -t t -n n
+../../target/release/revme baltest -t t -n n -p -a
 ```
 
 > Use `revme baltest -h` to see more options, such as scheduling with tx's gas limit, debug info for the most time consuming txs.
