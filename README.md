@@ -20,9 +20,12 @@ cargo build --release
 
 # Move the above generated json file to bins/revme/data directory. If you don't have the blocks data, there is a default json files for block 23601108.
 
-# execute with t threads for the n blocks
+# execute with t threads for the n blocks with pre-recoverd sender
 
-taskset -c 0-[number of cores - 1] ../../target/release/revme baltest -n [number of blocks]  -t [threads] -b [batchsize] -a -p -d --skip-7702
+taskset -c 0-[number of cores - 1] ../../target/release/revme baltest -n [number of blocks]  -t [threads] -b [batchsize] -a -p -d --skip-7702 --pre-recover-sender 
+
+# execute with t threads for the n blocks without pre-recoverd sender
+taskset -c 0-[number of cores - 1] ../../target/release/revme baltest -n [number of blocks]  -t [threads] -b [batchsize] -a -p -d
 ```
 
 > Use `revme baltest -h` to see more options, such as scheduling with tx's gas limit, debug info for the most time consuming txs.
