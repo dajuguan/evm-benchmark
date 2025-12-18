@@ -20,6 +20,9 @@ cargo build --release
 
 # Move the above generated json file to bins/revme/data directory. If you don't have the blocks data, there is a default json files for block 23601108.
 
+# execute with 1 thread first to generate tx gas used, which will be used to measure gas used without 7702 txs
+../../target/release/revme baltest -n [number of blocks] -a 
+
 # execute with t threads for the n blocks with pre-recoverd sender
 
 taskset -c 0-[number of cores - 1] ../../target/release/revme baltest -n [number of blocks]  -t [threads] -b [batchsize] -a -p -d --skip-7702 --pre-recover-sender 
