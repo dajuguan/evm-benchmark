@@ -32,3 +32,28 @@ taskset -c 0-[number of cores - 1] ../../target/release/revme baltest -n [number
 ```
 
 > Use `revme baltest -h` to see more options, such as scheduling with tx's gas limit, debug info for the most time consuming txs.
+
+## Execution with I/O
+
+### Prerequisite
+Run [setup](#setup) and [generate block and state dependency data](#generate-block-and-state-dependency-data-for-in-memory-execution) steps first.
+
+### Migrate PlainAccountState, PlainStorageState and Bytecodes from MDBX to RocksDB
+```
+git clone -b po_bal_pure_mem https://github.com/dajuguan/revm.git
+cd bins/dbtool
+cargo build --release
+../../target/release/dbtool migration --src [reth MDBX path] --dst [RocksDB path]
+```
+
+### Execute the dumped block with I/O
+```
+cd bins/revme
+cargo build --release
+## execute with 1 thread first to generate tx gas used and bal reads, which will be used to measure gas used without 7702 txs
+../../target/release/revme baltest -n [number of blocks] -a 
+## parallel I/O
+echo 3 | sudo tee /proc/sys/vm/drop_caches && ../../target/release/revme baltest -n [number of blocks]  -t [threads] -b [batchsize] -a -p -d --pre-recover-sender --skip-7702 --datadir [RocksDB or MDBX path] --io par --db [rocksdb or mdbx]
+## batched I/O
+echo 3 | sudo tee /proc/sys/vm/drop_caches && ../../target/release/revme baltest -n [number of blocks]  -t [threads] -b [batchsize] -a -p -d --pre-recover-sender --skip-7702 --datadir [RocksDB or MDBX path] --io batched --io-threads [batched I/O threads] --db [rocksdb or mdbx]
+```
