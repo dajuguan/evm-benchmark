@@ -57,3 +57,8 @@ echo 3 | sudo tee /proc/sys/vm/drop_caches && ../../target/release/revme baltest
 ## batched I/O
 echo 3 | sudo tee /proc/sys/vm/drop_caches && ../../target/release/revme baltest -n [number of blocks]  -t [threads] -b [batchsize] -a -p -d --pre-recover-sender --skip-7702 --datadir [RocksDB or MDBX path] --io batched --io-threads [batched I/O threads] --db [rocksdb or mdbx]
 ```
+
+### BAL-size measurement
+```
+../../target/release/revme balsize -n [number of blocks]
+```
