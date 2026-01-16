@@ -22,6 +22,8 @@ cargo build --release
 
 # execute with 1 thread first to generate tx gas used, which will be used to measure gas used without 7702 txs
 ../../target/release/revme baltest -n [number of blocks] -a 
+mv balread_[n].json ./data/
+mv gasused_[n].json ./data
 
 # execute with t threads for the n blocks with pre-recoverd sender
 
@@ -52,6 +54,8 @@ cd bins/revme
 cargo build --release
 ## execute with 1 thread first to generate tx gas used and bal reads, which will be used to measure gas used without 7702 txs
 ../../target/release/revme baltest -n [number of blocks] -a 
+mv balread_[n].json ./data/
+mv gasused_[n].json ./data
 ## parallel I/O
 echo 3 | sudo tee /proc/sys/vm/drop_caches && ../../target/release/revme baltest -n [number of blocks]  -t [threads] -b [batchsize] -a -p -d --pre-recover-sender --skip-7702 --datadir [RocksDB or MDBX path] --io par --db [rocksdb or mdbx]
 ## batched I/O
