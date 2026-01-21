@@ -46,7 +46,8 @@ taskset -c 0-[number of cores - 1] ../../target/release/revme baltest -n [filena
 ### Prerequisite
 Run [setup](#setup) and [generate block and state dependency data](#generate-block-and-state-dependency-data-for-in-memory-execution) steps first.
 
-### Migrate PlainAccountState, PlainStorageState and Bytecodes from MDBX to RocksDB
+### Database migration
+Migrate PlainAccountState, PlainStorageState and Bytecodes from MDBX to RocksDB:
 ```
 git clone -b po_bal_pure_mem https://github.com/dajuguan/revm.git
 cd bins/dbtool
@@ -70,6 +71,23 @@ mv gasused_[n].json ./data
 echo 3 | sudo tee /proc/sys/vm/drop_caches && ../../target/release/revme baltest -n [filename suffix]  -t [threads] -b [batchsize] -a -p -d --pre-recover-sender --skip-7702 --datadir [RocksDB or MDBX path] --io par --db [rocksdb or mdbx]
 ## batched I/O
 echo 3 | sudo tee /proc/sys/vm/drop_caches && ../../target/release/revme baltest -n [filename suffix]  -t [threads] -b [batchsize] -a -p -d --pre-recover-sender --skip-7702 --datadir [RocksDB or MDBX path] --io batched --io-threads [batched I/O threads] --db [rocksdb or mdbx]
+```
+
+## Execute with worst I/O load case
+
+### Prerequisite
+Run [setup](#setup) and [database migration](#database-migration) steps first.
+
+### Execute 
+```
+cd bins/revme
+cargo build --release
+
+## parallel I/O 
+echo 3 | sudo tee /proc/sys/vm/drop_caches && taskset -c 0-15 ../../target/release/revme balworst  --datadir [RocksDB path] --io par -b [batchsize: 1-10]
+
+## batched I/O
+echo 3 | sudo tee /proc/sys/vm/drop_caches && taskset -c 0-15 ../../target/release/revme balworst  --datadir [RocksDB path] --io batched --io-threads [threads] -b [batchsize: 1-10]
 ```
 
 ### BAL-size measurement
