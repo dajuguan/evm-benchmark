@@ -52,6 +52,7 @@ Migrate PlainAccountState, PlainStorageState and Bytecodes from MDBX to RocksDB:
 git clone -b po_bal_pure_mem https://github.com/dajuguan/revm.git
 cd bins/dbtool
 cargo build --release
+# This process takes ~3 hours — run it in tmux or another background shell to prevent accidental interruption.
 ../../target/release/dbtool migration --src [reth MDBX path] --dst [RocksDB path]
 ```
 
