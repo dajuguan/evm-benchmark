@@ -7,7 +7,7 @@
 ### Generate block and state dependency data for in-memory execution
 
 ```
-git clone -b po_bal_dump https://github.com/dajuguan/reth.git
+git clone -b bal-devnet-1-po https://github.com/dajuguan/reth.git
 cargo build --release
 # for n = from-to blocks (from is included, but to is not included), the following cmd will generate bals_n.json, prestates_n.json, blockHashes_n.json, blocks_n.json
 target/release/reth dump --datadir <reth node dir> --from <from> --to <to>
